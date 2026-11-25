@@ -1,4 +1,4 @@
-//! PortWatch VI Discord bot: a live progress widget for https://portwatch-vi.xyz/.
+//! PortWatcher, a Discord bot with a live progress widget for https://portwatch-vi.xyz/.
 
 mod commands;
 mod render;
@@ -117,7 +117,7 @@ async fn main() -> anyhow::Result<()> {
                     ready.application.id,
                     commands::INVITE_PERMISSIONS.bits()
                 );
-                println!("PortWatch VI bot is online as {} in {} server(s)", ready.user.name, ready.guilds.len());
+                println!("PortWatcher is online as {} in {} server(s)", ready.user.name, ready.guilds.len());
                 let cmds = &framework.options().commands;
                 match dev_guild {
                     Some(g) => {

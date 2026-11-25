@@ -346,7 +346,7 @@ pub async fn alerts_disable(ctx: Context<'_>) -> Result<(), Error> {
 // ---------------------------------------------------------------------------------------------
 // /settings
 
-/// Show this server's PortWatch VI settings.
+/// Show this server's PortWatcher settings.
 #[poise::command(slash_command, guild_only, default_member_permissions = "MANAGE_GUILD")]
 pub async fn settings(ctx: Context<'_>) -> Result<(), Error> {
     let guild = guild_id(ctx)?;
@@ -374,7 +374,7 @@ pub async fn settings(ctx: Context<'_>) -> Result<(), Error> {
     };
 
     let embed = CreateEmbed::new()
-        .title("PortWatch VI settings")
+        .title("PortWatcher settings")
         .color(BRAND_COLOR)
         .field("Live widget", widget, false)
         .field("Alerts", alerts, false)
@@ -474,15 +474,15 @@ pub async fn leaderboard(
     Ok(())
 }
 
-/// How to use the PortWatch VI bot.
+/// How to use PortWatcher.
 #[poise::command(slash_command)]
 pub async fn help(ctx: Context<'_>) -> Result<(), Error> {
     let embed = CreateEmbed::new()
-        .title("PortWatch VI bot")
+        .title("PortWatcher")
         .url(SITE_URL)
         .color(BRAND_COLOR)
         .description(
-            "Tracks [PortWatch VI](https://portwatch-vi.xyz/), the live tracker of every effort to run GTA VI on PC.",
+            "PortWatcher tracks [PortWatch VI](https://portwatch-vi.xyz/), the live tracker of every effort to run GTA VI on PC.",
         )
         .field(
             "Setup (Manage Server)",

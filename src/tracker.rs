@@ -488,7 +488,7 @@ impl Fetcher {
     pub fn new(url: String) -> anyhow::Result<Self> {
         let client = reqwest::Client::builder()
             .user_agent(concat!(
-                "PortWatchVI-DiscordBot/",
+                "PortWatcher-DiscordBot/",
                 env!("CARGO_PKG_VERSION")
             ))
             .timeout(Duration::from_secs(20))

@@ -1,6 +1,6 @@
-# PortWatch VI Discord Bot
+# PortWatcher
 
-An unofficial Discord bot for [PortWatch VI](https://portwatch-vi.xyz/), the live tracker of every effort to run
+PortWatcher is an unofficial Discord bot for [PortWatch VI](https://portwatch-vi.xyz/), the live tracker of every effort to run
 GTA VI on PC. It keeps a **live progress widget** in a channel of your choice and refreshes it every 30 seconds.
 It works on as many servers as you like: each server sets up its own channels with slash commands.
 
@@ -10,9 +10,9 @@ It works on as many servers as you like: each server sets up its own channels wi
 
 ## Add the bot to your server
 
-Don't want to host it yourself? Invite the hosted bot:
+Don't want to host it yourself? Invite the hosted PortWatcher:
 
-**[➕ Add PortWatch VI Bot to Discord](https://discord.com/oauth2/authorize?client_id=1575156681409560737&scope=bot+applications.commands&permissions=117760)**
+**[➕ Add PortWatcher to Discord](https://discord.com/oauth2/authorize?client_id=1575156681409560737&scope=bot+applications.commands&permissions=117760)**
 
 Then run `/widget setup #channel` in your server. You need the *Manage Server* permission for that.
 To run your own copy instead, see [Quick start](#quick-start).
@@ -53,7 +53,7 @@ Admins can change who may use which command under *Server Settings → Integrati
 2. Run the bot (see below). On start it prints the **invite link** in the console:
    ```
    Invite link: https://discord.com/oauth2/authorize?client_id=…&scope=bot+applications.commands&permissions=117760
-   PortWatch VI bot is online as PortWatch#1234 in 0 server(s)
+   PortWatcher is online as PortWatcher#1234 in 0 server(s)
    ```
    That's View Channels, Send Messages, Embed Links, Attach Files and Read Message History.
 3. Invite the bot, then run `/widget setup #channel` in your server.
@@ -64,7 +64,7 @@ The first time, global slash commands can take a few minutes to appear. Set `DEV
 
 1. Download [`egg/egg-portwatch-vi-bot.json`](egg/egg-portwatch-vi-bot.json) (it's also attached to every release).
 2. In the admin panel go to **Nests → Import Egg**, pick the file and choose a nest.
-3. Create a server with the **PortWatch VI Discord Bot** egg. It needs very little: 128 MB RAM and 100 MB disk are plenty.
+3. Create a server with the **PortWatcher** egg. It needs very little: 128 MB RAM and 100 MB disk are plenty.
 4. On the **Startup** tab, set **Discord Bot Token**. Everything else has sensible defaults:
 
    | Variable | Default | |

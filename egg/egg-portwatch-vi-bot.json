@@ -5,9 +5,9 @@
         "update_url": "https://raw.githubusercontent.com/wildesPepega/portwatch-vi-discord-bot/main/egg/egg-portwatch-vi-bot.json"
     },
     "exported_at": "2026-11-25T12:00:00+00:00",
-    "name": "PortWatch VI Discord Bot",
+    "name": "PortWatcher",
     "author": "wildesPepega@users.noreply.github.com",
-    "description": "Unofficial Discord bot that keeps a live progress widget for PortWatch VI (portwatch-vi.xyz) in your server, refreshed every 30 seconds, with optional alerts. Static Rust binary, no dependencies. https://github.com/wildesPepega/portwatch-vi-discord-bot",
+    "description": "PortWatcher: unofficial Discord bot that keeps a live progress widget for PortWatch VI (portwatch-vi.xyz) in your server, refreshed every 30 seconds, with optional alerts. Static Rust binary, no dependencies. https://github.com/wildesPepega/portwatch-vi-discord-bot",
     "features": null,
     "docker_images": {
         "Debian": "ghcr.io/parkervcp/yolks:debian"
@@ -16,13 +16,13 @@
     "startup": "if [ \"${AUTO_UPDATE}\" = \"1\" ]; then A=x86_64; case \"$(uname -m)\" in aarch64|arm64) A=aarch64 ;; esac; if [ -z \"${RELEASE_VERSION}\" ] || [ \"${RELEASE_VERSION}\" = \"latest\" ]; then B=https://github.com/wildesPepega/portwatch-vi-discord-bot/releases/latest/download; else B=https://github.com/wildesPepega/portwatch-vi-discord-bot/releases/download/${RELEASE_VERSION}; fi; echo \"Checking for updates...\"; if curl -fsSL -o portwatch-bot.new \"$B/portwatch-bot-$A-linux\"; then chmod +x portwatch-bot.new && mv -f portwatch-bot.new portwatch-bot; else rm -f portwatch-bot.new; echo \"Update check failed, starting the installed version.\"; fi; fi; ./portwatch-bot",
     "config": {
         "files": "{}",
-        "startup": "{\"done\": \"PortWatch VI bot is online\"}",
+        "startup": "{\"done\": \"PortWatcher is online\"}",
         "logs": "{}",
         "stop": "^C"
     },
     "scripts": {
         "installation": {
-            "script": "#!/bin/bash\n# PortWatch VI Discord bot - Pterodactyl install script.\n# Downloads the static Linux binary for this server's CPU from the GitHub releases.\nset -euo pipefail\n\nREPO=\"wildesPepega/portwatch-vi-discord-bot\"\ncd /mnt/server\n\ncase \"$(uname -m)\" in\n  x86_64|amd64) ARCH=\"x86_64\" ;;\n  aarch64|arm64) ARCH=\"aarch64\" ;;\n  *) echo \"Unsupported CPU architecture: $(uname -m)\"; exit 1 ;;\nesac\n\nif [ -z \"${RELEASE_VERSION:-}\" ] || [ \"${RELEASE_VERSION}\" = \"latest\" ]; then\n  BASE=\"https://github.com/${REPO}/releases/latest/download\"\nelse\n  BASE=\"https://github.com/${REPO}/releases/download/${RELEASE_VERSION}\"\nfi\n\necho \"Downloading portwatch-bot (${ARCH}) from ${BASE}\"\ncurl -fsSL -o portwatch-bot \"${BASE}/portwatch-bot-${ARCH}-linux\"\ncurl -fsSL -o portwatch-bot.sha256 \"${BASE}/portwatch-bot-${ARCH}-linux.sha256\"\necho \"$(cut -d' ' -f1 portwatch-bot.sha256)  portwatch-bot\" | sha256sum -c -\nrm -f portwatch-bot.sha256\nchmod +x portwatch-bot\nmkdir -p data\n\necho \"Install complete. Set DISCORD_TOKEN on the Startup tab, then start the server.\"\n",
+            "script": "#!/bin/bash\n# PortWatcher (PortWatch VI Discord bot) - Pterodactyl install script.\n# Downloads the static Linux binary for this server's CPU from the GitHub releases.\nset -euo pipefail\n\nREPO=\"wildesPepega/portwatch-vi-discord-bot\"\ncd /mnt/server\n\ncase \"$(uname -m)\" in\n  x86_64|amd64) ARCH=\"x86_64\" ;;\n  aarch64|arm64) ARCH=\"aarch64\" ;;\n  *) echo \"Unsupported CPU architecture: $(uname -m)\"; exit 1 ;;\nesac\n\nif [ -z \"${RELEASE_VERSION:-}\" ] || [ \"${RELEASE_VERSION}\" = \"latest\" ]; then\n  BASE=\"https://github.com/${REPO}/releases/latest/download\"\nelse\n  BASE=\"https://github.com/${REPO}/releases/download/${RELEASE_VERSION}\"\nfi\n\necho \"Downloading portwatch-bot (${ARCH}) from ${BASE}\"\ncurl -fsSL -o portwatch-bot \"${BASE}/portwatch-bot-${ARCH}-linux\"\ncurl -fsSL -o portwatch-bot.sha256 \"${BASE}/portwatch-bot-${ARCH}-linux.sha256\"\necho \"$(cut -d' ' -f1 portwatch-bot.sha256)  portwatch-bot\" | sha256sum -c -\nrm -f portwatch-bot.sha256\nchmod +x portwatch-bot\nmkdir -p data\n\necho \"Install complete. Set DISCORD_TOKEN on the Startup tab, then start the server.\"\n",
             "container": "ghcr.io/parkervcp/installers:debian",
             "entrypoint": "bash"
         }
