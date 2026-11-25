@@ -8,6 +8,15 @@ It works on as many servers as you like: each server sets up its own channels wi
 
 > Not affiliated with PortWatch VI. All data comes from the public site.
 
+## Add the bot to your server
+
+Don't want to host it yourself? Invite the hosted bot:
+
+**[➕ Add PortWatch VI Bot to Discord](https://discord.com/oauth2/authorize?client_id=1575156681409560737&scope=bot+applications.commands&permissions=117760)**
+
+Then run `/widget setup #channel` in your server. You need the *Manage Server* permission for that.
+To run your own copy instead, see [Quick start](#quick-start).
+
 ## Features
 
 - **Live widget**: overall progress, the leader, the milestone ladder, key stats and the top 5, drawn as an image,
