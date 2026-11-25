@@ -1,0 +1,102 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": "https://raw.githubusercontent.com/wildesPepega/portwatch-vi-discord-bot/main/egg/egg-portwatch-vi-bot.json"
+    },
+    "exported_at": "2026-11-25T12:00:00+00:00",
+    "name": "PortWatch VI Discord Bot",
+    "author": "wildesPepega@users.noreply.github.com",
+    "description": "Unofficial Discord bot that keeps a live progress widget for PortWatch VI (portwatch-vi.xyz) in your server, refreshed every 30 seconds, with optional alerts. Static Rust binary, no dependencies. https://github.com/wildesPepega/portwatch-vi-discord-bot",
+    "features": null,
+    "docker_images": {
+        "Debian": "ghcr.io/parkervcp/yolks:debian"
+    },
+    "file_denylist": [],
+    "startup": "if [ \"${AUTO_UPDATE}\" = \"1\" ]; then A=x86_64; case \"$(uname -m)\" in aarch64|arm64) A=aarch64 ;; esac; if [ -z \"${RELEASE_VERSION}\" ] || [ \"${RELEASE_VERSION}\" = \"latest\" ]; then B=https://github.com/wildesPepega/portwatch-vi-discord-bot/releases/latest/download; else B=https://github.com/wildesPepega/portwatch-vi-discord-bot/releases/download/${RELEASE_VERSION}; fi; echo \"Checking for updates...\"; if curl -fsSL -o portwatch-bot.new \"$B/portwatch-bot-$A-linux\"; then chmod +x portwatch-bot.new && mv -f portwatch-bot.new portwatch-bot; else rm -f portwatch-bot.new; echo \"Update check failed, starting the installed version.\"; fi; fi; ./portwatch-bot",
+    "config": {
+        "files": "{}",
+        "startup": "{\"done\": \"PortWatch VI bot is online\"}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!/bin/bash\n# PortWatch VI Discord bot - Pterodactyl install script.\n# Downloads the static Linux binary for this server's CPU from the GitHub releases.\nset -euo pipefail\n\nREPO=\"wildesPepega/portwatch-vi-discord-bot\"\ncd /mnt/server\n\ncase \"$(uname -m)\" in\n  x86_64|amd64) ARCH=\"x86_64\" ;;\n  aarch64|arm64) ARCH=\"aarch64\" ;;\n  *) echo \"Unsupported CPU architecture: $(uname -m)\"; exit 1 ;;\nesac\n\nif [ -z \"${RELEASE_VERSION:-}\" ] || [ \"${RELEASE_VERSION}\" = \"latest\" ]; then\n  BASE=\"https://github.com/${REPO}/releases/latest/download\"\nelse\n  BASE=\"https://github.com/${REPO}/releases/download/${RELEASE_VERSION}\"\nfi\n\necho \"Downloading portwatch-bot (${ARCH}) from ${BASE}\"\ncurl -fsSL -o portwatch-bot \"${BASE}/portwatch-bot-${ARCH}-linux\"\ncurl -fsSL -o portwatch-bot.sha256 \"${BASE}/portwatch-bot-${ARCH}-linux.sha256\"\necho \"$(cut -d' ' -f1 portwatch-bot.sha256)  portwatch-bot\" | sha256sum -c -\nrm -f portwatch-bot.sha256\nchmod +x portwatch-bot\nmkdir -p data\n\necho \"Install complete. Set DISCORD_TOKEN on the Startup tab, then start the server.\"\n",
+            "container": "ghcr.io/parkervcp/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Discord Bot Token",
+            "description": "Your bot token from https://discord.com/developers/applications (Bot > Reset Token). The invite link is printed in the console on start.",
+            "env_variable": "DISCORD_TOKEN",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:200",
+            "field_type": "text"
+        },
+        {
+            "name": "Update Interval (seconds)",
+            "description": "How often the widget refreshes. Minimum 10.",
+            "env_variable": "UPDATE_INTERVAL_SECS",
+            "default_value": "30",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|min:10|max:3600",
+            "field_type": "text"
+        },
+        {
+            "name": "Dev Server ID",
+            "description": "Optional. Register slash commands only in this server (instant). Leave empty to register them globally.",
+            "env_variable": "DEV_GUILD_ID",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|numeric|digits_between:17,20",
+            "field_type": "text"
+        },
+        {
+            "name": "Auto Update",
+            "description": "1 = download the selected release on every start, 0 = keep the installed binary.",
+            "env_variable": "AUTO_UPDATE",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Release Version",
+            "description": "Release tag to install, e.g. v0.1.0, or 'latest'.",
+            "env_variable": "RELEASE_VERSION",
+            "default_value": "latest",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:40",
+            "field_type": "text"
+        },
+        {
+            "name": "Log Level",
+            "description": "RUST_LOG filter, e.g. info or debug.",
+            "env_variable": "RUST_LOG",
+            "default_value": "info,serenity=warn,poise=warn",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:200",
+            "field_type": "text"
+        },
+        {
+            "name": "Tracker URL",
+            "description": "Data source. Only change this if the site moves.",
+            "env_variable": "TRACKER_URL",
+            "default_value": "https://portwatch-vi.xyz/data/tracker.json",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|url",
+            "field_type": "text"
+        }
+    ]
+}
